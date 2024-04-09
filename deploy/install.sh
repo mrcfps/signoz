@@ -464,7 +464,7 @@ if ! is_command_present docker; then
         request_sudo
         install_docker
         # enable docker without sudo from next reboot
-        sudo usermod -aG docker "${USER}"
+        sudo usermod -aG docker ubuntu
     elif is_mac; then
         echo ""
         echo "+++++++++++ IMPORTANT READ ++++++++++++++++++++++"
@@ -527,33 +527,6 @@ if [[ $status_code -ne 200 ]]; then
 
 else
     send_event "installation_success"
-
-    echo "++++++++++++++++++ SUCCESS ++++++++++++++++++++++"
-    echo ""
-    echo "🟢 Your installation is complete!"
-    echo ""
-    echo -e "🟢 Your frontend is running on http://localhost:3301"
-    echo ""
-    echo "ℹ️  By default, retention period is set to 15 days for logs and traces, and 30 days for metrics." 
-    echo -e "To change this, navigate to the General tab on the Settings page of SigNoz UI. For more details, refer to https://signoz.io/docs/userguide/retention-period \n"
-
-    echo "ℹ️  To bring down SigNoz and clean volumes : $sudo_cmd docker-compose -f ./docker/clickhouse-setup/docker-compose.yaml down -v"
-
-    echo ""
-    echo "+++++++++++++++++++++++++++++++++++++++++++++++++"
-    echo ""
-    echo "👉 Need help in Getting Started?"
-    echo -e "Join us on Slack https://signoz.io/slack"
-    echo ""
-    echo -e "\n📨 Please share your email to receive support & updates about SigNoz!"
-    read -rp 'Email: ' email
-
-    while [[ $email == "" ]]
-    do
-        read -rp 'Email: ' email
-    done
-    
-    send_event "identify_successful_installation"
 fi
 
 echo -e "\n🙏 Thank you!\n"
